@@ -1,0 +1,42 @@
+services:
+  frontend:
+    container_name: frontend
+    image: frontend
+    env_file:
+      - ./frontend/.env.local
+    build:
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    depends_on:
+      - backend
+  
+  backend:
+    container_name: backend
+    image: backend
+    env_file: ".env"
+    build:
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - '8000:8000'
+    environment:
+      - DATABASE_URL=postgresql://postgres:pgpswd25@db:5432/llmcodespace
+    depends_on:
+      - db
+  
+  db:
+    container_name: db
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pgpswd25
+      POSTGRES_DB: llmcodespace
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}

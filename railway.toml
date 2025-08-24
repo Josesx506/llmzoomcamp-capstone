@@ -1,0 +1,5 @@
+[build]
+root = "."
+builder = "dockerfile"
+dockerfilePath = "backend/Dockerfile"
+

@@ -1,0 +1,55 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    depends_on:
+      - db
+      - ollama
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    network_mode: service:db
+  
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pgpswd25
+      POSTGRES_DB: llmcodespace
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+  
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3500:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./volumes/grafana:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+    depends_on:
+      - db
+  
+  ollama:
+    build:
+      context: ..
+      dockerfile: .devcontainer/ollama.Dockerfile
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+
+# Named volumes are saved here. 
+# Path volumes with `./` and binded to local directories
+volumes:
+  postgresdata:
+  ollama_models:
+  grafana_data:
+
