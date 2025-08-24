@@ -21,7 +21,7 @@ COPY pyproject.toml ./
 COPY ./backend/ .
 
 # Install dependencies
-RUN poetry install --no-interaction --no-ansi --no-root
+RUN poetry install --without dev --no-interaction --no-ansi --no-root
 
 # Reference the app file and the app variable `file:variable`
 CMD ["poetry", "run", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
