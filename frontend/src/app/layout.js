@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Mini-wiki RAG application",
   description: "Capstone project for LLM zoomcamp 2025",
+  icons: {
+    icon: "/card-sim.svg"
+  }
 };
 
 export default function RootLayout({ children }) {

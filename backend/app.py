@@ -127,7 +127,7 @@ async def downvote_response(conv_id:int, msg_id:int, session:SessionDep):
         raise HTTPException(status_code=404, detail=f"Error upvoting response: {str(e)}")
 
 
-@app.delete("/conversations/{conv_id}/")
+@app.delete("/conversations/{conv_id}")
 async def delete_conversation(conv_id:int, session:SessionDep):
     """
     Delete a conversation history

@@ -25,6 +25,10 @@ the [evaluate_search.py](./backend/evaluate_search.py) script with `poetry run p
 }
 ```
 
+> [!Important]
+> Evaluation python package dependencies are set to dev groups to improve deployment time. Use 
+`poetry install --with dev` to ensure that those dependencies are installed before running the scripts.
+
 ### LLM evaluation
 Only one prompt was used. The rag pipeline with a single prompt was evaluated using 2 different 
 models, Gemma3:1b from ollama, and gpt-4o-mini. Offline evaluation used cosine similarity and 
@@ -132,4 +136,4 @@ Run both together with ***docker compose***
 Use docker in dev container or with docker compose to replicate the application.
 
 ### Deployment
-This project is deployed on vercel and railway
+This project is deployed on vercel and railway. You can access it at https://llmzoomcamp-capstone.vercel.app/chat
